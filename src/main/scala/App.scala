@@ -41,7 +41,8 @@ object App {
     // Exercise3.exercise1(spark)
     // Json.example1(spark)
     // People3.run(spark)
-    Exercise3.exercise2(spark)
+    // Exercise3.exercise2(spark)
+    Exercise3.exercise3(spark)
 
     spark.stop()
 

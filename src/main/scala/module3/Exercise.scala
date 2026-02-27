@@ -4,6 +4,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.Row
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.DoubleType
 
 object Exercise {
   
@@ -82,6 +83,29 @@ object Exercise {
       .orderBy(col("singleListedIn").asc)
     println(s"--- 7. Określ ile jest filmów przypisanych do poszczególnych gatunków (listed_in)")
     listedInStatsDF.show(truncate = false)
+  }
+
+  def exercise3(spark: SparkSession): Unit = {
+    import spark.implicits._
+
+    // 1. Wczytaj do Dataframe’a plik z danymi o pizzach (pizza_data.csv)
+    val pizzaDF: Dataset[Row] = spark.read.option("header", "true").csv("data/pizza_data.csv")
+    println(s"--- 1. Wczytaj do Dataframe’a plik z danymi o pizzach (pizza_data.csv)")
+    pizzaDF.show()
+    println(s"Number of pizza data: ${pizzaDF.count()}")
+
+    // 2. Zbadaj strukturę danych (schema, liczba rekordów itd)
+    println(s"--- 2. Zbadaj strukturę danych (schema, liczba rekordów itd)")
+    pizzaDF.printSchema()
+
+    // 3. Wybierz średnie pizze i oblicz średnią, minimalną i maksymalną cenę
+    var mediumPizzaDF: Dataset[Row] = pizzaDF.filter(col("Size").contains("Medium"))
+      .filter(col("Price").isNotNull)
+      .withColumn("Price", regexp_replace(col("Price"), "\\$", "").cast(DoubleType))
+      .agg(avg(col("Price")).as("avgPrice"), min(col("Price")).as("minPrice"), max(col("Price")).as("maxPrice"))
+    mediumPizzaDF.show()
+
+    mediumPizzaDF.printSchema()
   }
 
 }
