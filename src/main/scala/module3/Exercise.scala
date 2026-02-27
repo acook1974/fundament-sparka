@@ -28,4 +28,60 @@ object Exercise {
     peopleWithJobsDF.show()
   }
 
+  def exercise2(spark: SparkSession): Unit = {
+    import spark.implicits._
+
+    // 1. Wczytaj do Dataframe’a plik z tytułami Netflix (netflix_titles.csv)
+    val netflixDF: Dataset[Row] = spark.read.option("header", "true").csv("data/netflix_titles.csv")
+    println(s"--- 1. Wczytaj do Dataframe’a plik z tytułami Netflix (netflix_titles.csv)")
+    netflixDF.show()
+
+    // 2. Zbadaj strukturę danych (schema, liczba rekordów itd)
+    netflixDF.printSchema()
+    println(s"--- 2. Zbadaj strukturę danych (schema, liczba rekordów itd)")
+    println(s"Number of netflix data: ${netflixDF.count()}")
+
+    // 3. Zamień nulle na napisy „NULL”
+    val netflixWithoutNullsDF: Dataset[Row] = netflixDF.na.fill("NULL")
+    println(s"--- 3. Zamień nulle na napisy „NULL”")
+    netflixWithoutNullsDF.show()
+
+    // 4. Zbadaj ile jest filmów z podziałem na rodzaje (kolumna type)
+    val netflixWithTypeDF: Dataset[Row] = netflixDF.groupBy("type")
+      .agg(count(col("show_id")).as("countFilms"))
+      .filter(col("type").isNotNull)
+    println(s"--- 4. Zbadaj ile jest filmów z podziałem na rodzaje (kolumna type)")
+    netflixWithTypeDF.show()
+
+    // 5. Zbadaj ile tytułów nakręcili poszczególni directorzy (kolumna director)
+    val netflixWithDirectorDF: Dataset[Row] = netflixDF
+      .withColumn("director", split(col("director"), ","))
+      .select(col("title"), explode(col("director")).as("singleDirector"))
+      .withColumn("singleDirector", trim(col("singleDirector")))
+      .distinct()
+      .groupBy("singleDirector")
+      .agg(count(col("title")).as("countFilms"))
+      .orderBy(col("countFilms").desc)
+    println(s"--- 5. Zbadaj ile tytułów nakręcili poszczególni directorzy (kolumna director)")
+    netflixWithDirectorDF.show()
+
+    //6. Zrób statystyki z podziałem na lata – kiedy nakręcono ile filmów (wyświetl w kolejności chronologicznej).
+    val netflixWithYearDF: Dataset[Row] = netflixDF.groupBy("release_year")
+      .agg(count(col("show_id")).as("countFilms"))
+      .filter(regexp_extract(col("release_year"), "^\\d{4}$", 0) =!= "")
+      .orderBy(col("release_year").asc)
+    println(s"--- 6. Zrób statystyki z podziałem na lata – kiedy nakręcono ile filmów (wyświetl w kolejności chronologicznej).")
+    netflixWithYearDF.show()
+
+    //7. Określ ile jest filmów przypisanych do poszczególnych gatunków (listed_in)
+    val listedInStatsDF: Dataset[Row] = netflixDF.withColumn("listed_in", split(col("listed_in"), ","))
+      .select(col("show_id"), explode(col("listed_in")).as("singleListedIn"))
+      .withColumn("singleListedIn", trim(col("singleListedIn")))
+      .groupBy("singleListedIn")
+      .agg(count(col("show_id")).as("countFilms"))
+      .orderBy(col("singleListedIn").asc)
+    println(s"--- 7. Określ ile jest filmów przypisanych do poszczególnych gatunków (listed_in)")
+    listedInStatsDF.show(truncate = false)
+  }
+
 }

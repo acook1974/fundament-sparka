@@ -9,6 +9,8 @@ import module3.Unions
 import module3.Joining
 import module3.OtherOperations
 import module3.{Exercise => Exercise3}
+import module3.Json
+import module3.{People => People3}
 
 object App {  
 
@@ -36,8 +38,11 @@ object App {
     // Joining.example2(spark)
     // OtherOperations.pizzaAnalysis(spark)
     // OtherOperations.netflixAnalysis2(spark)
-    Exercise3.exercise1(spark)
-    
+    // Exercise3.exercise1(spark)
+    // Json.example1(spark)
+    // People3.run(spark)
+    Exercise3.exercise2(spark)
+
     spark.stop()
 
   }
