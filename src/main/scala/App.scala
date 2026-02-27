@@ -5,6 +5,10 @@ import module1.{Exercise => Exercise1}
 import module2.BasicOperation
 import module2.LoadData
 import module2.{Exercise => Exercise2}
+import module3.Unions
+import module3.Joining
+import module3.OtherOperations
+import module3.{Exercise => Exercise3}
 
 object App {  
 
@@ -26,7 +30,13 @@ object App {
     // BasicOperation.example2(spark)
     // LoadData.example1(spark)
     // LoadData.example2(spark)
-    Exercise2.run(spark)
+    // Exercise2.run(spark)
+    // Unions.example1(spark)
+    // Joining.example1(spark)
+    // Joining.example2(spark)
+    // OtherOperations.pizzaAnalysis(spark)
+    // OtherOperations.netflixAnalysis2(spark)
+    Exercise3.exercise1(spark)
     
     spark.stop()
 
