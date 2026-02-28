@@ -12,6 +12,7 @@ import module3.{Exercise => Exercise3}
 import module3.Json
 import module3.{People => People3}
 import module4.{UdfsOperations => UdfsOperations}
+import module4.{Exercise => Exercise4}
 
 object App {  
 
@@ -44,9 +45,11 @@ object App {
     // People3.run(spark)
     // Exercise3.exercise2(spark)
     // Exercise3.exercise3(spark)
-    var udfsOperations: UdfsOperations = new UdfsOperations()
+    // var udfsOperations: UdfsOperations = new UdfsOperations()
     // udfsOperations.initials(spark)
-    udfsOperations.capitalizationMoney(spark)
+    // udfsOperations.capitalizationMoney(spark)
+    // udfsOperations.checkingIsAdult(spark)
+    Exercise4.exercise(spark)
 
     spark.stop()
 
