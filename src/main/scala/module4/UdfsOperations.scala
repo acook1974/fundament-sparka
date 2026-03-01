@@ -8,7 +8,7 @@ import module4.udfs.InterestCapitalizationUDF
 import org.apache.spark.sql.types.DataTypes
 import org.apache.spark.sql.functions.{callUDF, col, lit, when}
 
-class UdfsOperations {
+object UdfsOperations {
   
   def initials(spark: SparkSession): Unit = {
     import spark.implicits._

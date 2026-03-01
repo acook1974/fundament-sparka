@@ -45,11 +45,11 @@ object App {
     // People3.run(spark)
     // Exercise3.exercise2(spark)
     // Exercise3.exercise3(spark)
-    // var udfsOperations: UdfsOperations = new UdfsOperations()
-    // udfsOperations.initials(spark)
-    // udfsOperations.capitalizationMoney(spark)
+    // UdfsOperations.initials(spark)
+    // UdfsOperations.capitalizationMoney(spark)
     // udfsOperations.checkingIsAdult(spark)
-    Exercise4.exercise(spark)
+    // Exercise4.exercise1(spark)
+    Exercise4.exercise2(spark)
 
     spark.stop()
 
