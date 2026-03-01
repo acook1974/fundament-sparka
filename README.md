@@ -2,6 +2,16 @@
 
 Projekt edukacyjny do nauki Apache Spark w języku Scala. Zawiera przykłady i ćwiczenia z podstawowych operacji na RDD, DataFrame, ładowania danych, łączeń, operacji na JSON oraz UDF (User Defined Functions).
 
+## Spis treści
+
+- [Wymagania](#wymagania)
+- [Struktura projektu](#struktura-projektu)
+- [Uruchomienie](#uruchomienie)
+- [Testy](#testy)
+- [Zależności](#zależności)
+- [Dane](#dane)
+- [Licencja](#licencja)
+
 ## Wymagania
 
 - **Scala** 2.13.16  
@@ -34,6 +44,7 @@ fundament-sparka/
 │       └── udfs/
 │           ├── InitialsUDF.scala
 │           ├── InterestCapitalizationUDF.scala
+│           ├── InterestCapitalizationWithUDF.scala
 │           └── CountWords.scala
 ├── data/                      # Zbiory danych (CSV m.in. Netflix, pizza, covid)
 └── build.sbt
