@@ -12,7 +12,7 @@ class CapitalizationAndContributionUDF extends UDF4[Long, Int, Int, Int, Double]
       val interestRatePerYear = interestRate / 100.0
       val growthFactor = Math.pow(1 + interestRatePerYear, yearsAmount)
       val finalAmount = startCapital * growthFactor + contribution * (growthFactor - 1) / interestRatePerYear
-      "%2.2f".format(finalAmount).toDouble
+      Math.round(finalAmount).toDouble
     }
   }
 }
